@@ -17,7 +17,8 @@ public abstract class Message {
         WindowsFitted,
         PrepareExterior,
         InteriorPrepared,
-        ExteriorPrepared
+        ExteriorPrepared,
+        Order                   // Used in exceptions in case of Quantity messages
     }
 
     public static class Quantity {
