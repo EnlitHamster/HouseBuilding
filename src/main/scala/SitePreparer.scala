@@ -1,4 +1,4 @@
-import Operations._
+import Operation._
 import akka.actor.Actor
 
 class SitePreparer extends Actor {
