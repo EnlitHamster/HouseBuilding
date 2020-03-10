@@ -1,10 +1,12 @@
 import Operation._
-import akka.actor.SupervisorStrategy.Restart
-import akka.actor.{Actor, OneForOneStrategy, Props}
+import akka.actor.SupervisorStrategy._
+import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
 
 class FrameManager extends Actor {
+  val sitePreparer: ActorRef = context.actorOf(Props[SitePreparer], s"SitePreparer")
+
   def receive: Receive = {
-    case PrepareFrame => context.actorOf(Props[SitePreparer], s"SitePreparer") ! PrepareSite
+    case PrepareFrame => sitePreparer ! PrepareSite
     case SitePrepared => context.actorOf(Props[BrickLayer], s"BrickLayer") ! BuildWalls
     case WallsBuilt =>
       context.parent ! FramePrepared
@@ -13,7 +15,8 @@ class FrameManager extends Actor {
 
   // Exception management
   override val supervisorStrategy: OneForOneStrategy = OneForOneStrategy() {
-    case _: BadWeatherException => Restart
-    case _: InsufficientMaterialsException => Restart
+    case e: OperationException =>
+      e.Sender ! e.Op
+      Resume
   }
 }
