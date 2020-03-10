@@ -20,8 +20,6 @@ final case class BadWeatherException(private val sender: ActorRef,
                                      private val cause: Throwable = None.orNull)
   extends OperationException(sender, onOp, message, cause)
 
-final case class InsufficientMaterialsException(private val sender: ActorRef,
-                                                private val onOp: Operation,
-                                                private val message: String = "Insufficient materials",
+final case class InsufficientMaterialsException(private val message: String = "Insufficient materials",
                                                 private val cause: Throwable = None.orNull)
-  extends OperationException(sender, onOp, message, cause)
+  extends Exception(message, cause)
