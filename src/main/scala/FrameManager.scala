@@ -1,4 +1,5 @@
 import Message.Operation._
+import Message.Quantity
 import akka.actor.SupervisorStrategy._
 import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
 
@@ -11,6 +12,7 @@ class FrameManager extends Actor {
     case WallsBuilt =>
       context.parent ! FramePrepared
       context.stop(self)
+    case q: Quantity => context.parent.forward(q)
   }
 
   // Exception management

@@ -1,4 +1,5 @@
 import Message.Operation._
+import Message.Quantity
 import akka.actor.{Actor, Props}
 
 class InteriorManager extends Actor {
@@ -8,5 +9,6 @@ class InteriorManager extends Actor {
     case WindowsFitted =>
       context.parent ! InteriorPrepared
       context.stop(self)
+    case q: Quantity => context.parent.forward(q)
   }
 }
