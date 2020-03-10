@@ -1,4 +1,4 @@
-import Operation._
+import Message.Operation._
 import akka.actor.{ActorSystem, Props}
 
 object Main {

@@ -1,3 +1,4 @@
+import Message.Operation
 import akka.actor.ActorRef
 
 // Exception classes
