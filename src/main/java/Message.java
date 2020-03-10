@@ -1,9 +1,6 @@
-// Enumerator containing all the Actors possible messages
-// Used to avoid DeadLetters and standardizing communication
-
-import akka.actor.ActorRef;
-
 public abstract class Message {
+    // Enumerator containing all the Actors possible messages
+    // Used to avoid DeadLetters and standardizing communication
     public enum Operation {
         //---------
         // BUILDING
@@ -34,8 +31,7 @@ public abstract class Message {
     }
 
     public static class Quantity {
-        public final ActorRef From;
         public final int Quantity;
-        public  Quantity(int q, ActorRef f) {Quantity = q; From = f;}
+        public  Quantity(int q) {Quantity = q;}
     }
 }
