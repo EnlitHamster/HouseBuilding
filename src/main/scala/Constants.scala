@@ -4,6 +4,6 @@ object Constants {
     val Bricks = 15
     val Paint = 5
     val Windows = 5
-    val Lawn = 20
+    val Logs = 20
   }
 }
