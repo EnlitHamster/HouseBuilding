@@ -26,7 +26,6 @@ public abstract class Message {
         // MATERIALS
         //----------
 
-        Order,                  // Used in exceptions in case of Quantity messages
         Delivered
     }
 
