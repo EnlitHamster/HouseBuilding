@@ -1,8 +1,14 @@
 // Enumerator containing all the Actors possible messages
 // Used to avoid DeadLetters and standardizing communication
 
+import akka.actor.ActorRef;
+
 public abstract class Message {
     public enum Operation {
+        //---------
+        // BUILDING
+        //---------
+
         BuildHouse,
         PrepareFrame,
         PrepareSite,
@@ -18,11 +24,18 @@ public abstract class Message {
         PrepareExterior,
         InteriorPrepared,
         ExteriorPrepared,
-        Order                   // Used in exceptions in case of Quantity messages
+
+        //----------
+        // MATERIALS
+        //----------
+
+        Order,                  // Used in exceptions in case of Quantity messages
+        Delivered
     }
 
     public static class Quantity {
+        public final ActorRef From;
         public final int Quantity;
-        public  Quantity(int q) {Quantity = q;}
+        public  Quantity(int q, ActorRef f) {Quantity = q; From = f;}
     }
 }
