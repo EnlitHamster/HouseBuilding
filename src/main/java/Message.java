@@ -20,8 +20,8 @@ public abstract class Message {
         ExteriorPrepared
     }
 
-    public static class Order {
+    public static class Quantity {
         public final int Quantity;
-        public Order(int q) {Quantity = q;}
+        public  Quantity(int q) {Quantity = q;}
     }
 }
