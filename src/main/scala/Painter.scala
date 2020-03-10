@@ -5,7 +5,7 @@ class Painter extends Actor {
   def receive: Receive = {
     case PaintWalls =>
       // TODO: possibility of InsufficientMaterialsException - requires materials
-      context.parent ! WindowsFitted
+      context.parent ! WallsPainted
       context.stop(self)
   }
 }
