@@ -8,6 +8,6 @@ class MaterialManager extends Actor {
     case q: Quantity =>
       if (q.Quantity < 0 && Math.abs(q.Quantity) > materials) throw InsufficientMaterialsException(self, Order)
       else materials += q.Quantity
-      q.From ! Delivered
+      sender() ! Delivered
   }
 }
