@@ -6,7 +6,6 @@ public abstract class Message {
         // BUILDING
         //---------
 
-        BuildHouse,
         SitePrepared,
         WallsBuilt,
         FramePrepared,

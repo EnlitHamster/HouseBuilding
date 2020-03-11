@@ -10,9 +10,7 @@ import scala.concurrent.duration._
 
 class ConstructionCompany extends Actor {
   val MaterialManager: ActorRef = context.actorOf(Props[MaterialManager], s"MaterialManager")
-
   MaterialManager ! new Quantity(50)
-  context.become(awaitDelivery)
 
   def receive: Receive = {
     //-------------------
@@ -28,18 +26,9 @@ class ConstructionCompany extends Actor {
     // MATERIAL OPERATIONS
     //--------------------
 
-    case q: Quantity => MaterialManager.forward(q)
-  }
-
-  def awaitDelivery: Receive = {
     case Delivered =>
       context.become(receive)
       context.actorOf(Props[FrameManager], s"FrameManager")
-
-    //--------------------
-    // MATERIAL OPERATIONS
-    //--------------------
-
     case q: Quantity => MaterialManager.forward(q)
   }
 
