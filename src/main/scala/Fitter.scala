@@ -3,13 +3,9 @@ import Message.Quantity
 import akka.actor.Actor
 
 class Fitter extends Actor {
-  def receive: Receive = {
-    case FitWindows =>
-      context.parent ! new Quantity(Constants.Materials.Windows)
-      context.become(awaitDelivery)
-  }
+  context.parent ! new Quantity(Constants.Materials.Windows)
 
-  def awaitDelivery: Receive = {
+  def receive: Receive = {
     case Delivered =>
       context.parent ! WindowsFitted
       context.stop(self)

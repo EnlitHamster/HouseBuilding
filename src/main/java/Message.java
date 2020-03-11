@@ -7,18 +7,11 @@ public abstract class Message {
         //---------
 
         BuildHouse,
-        PrepareFrame,
-        PrepareSite,
         SitePrepared,
-        BuildWalls,
         WallsBuilt,
         FramePrepared,
-        PrepareInterior,
-        PaintWalls,
         WallsPainted,
-        FitWindows,
         WindowsFitted,
-        PrepareExterior,
         InteriorPrepared,
         ExteriorPrepared,
 

@@ -5,15 +5,11 @@ import akka.actor.Actor
 import scala.util.Random
 
 class SitePreparer extends Actor {
-  def receive: Receive = {
-    case PrepareSite =>
-      context.parent ! new Quantity(Constants.Materials.Concrete)
-      context.become(awaitDelivery)
-  }
+  context.parent ! new Quantity(Constants.Materials.Concrete)
 
-  def awaitDelivery: Receive = {
+  def receive: Receive = {
     case Delivered =>
-      if (Random.nextInt(99) > 79) throw BadWeatherException(self, PrepareSite)
+      if (Random.nextInt(99) > 79) throw BadWeatherException()
       context.parent ! SitePrepared
       context.stop(self)
   }

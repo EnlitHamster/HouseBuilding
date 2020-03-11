@@ -3,13 +3,9 @@ import Message.Quantity
 import akka.actor.Actor
 
 class Painter extends Actor {
-  def receive: Receive = {
-    case PaintWalls =>
-      context.parent ! new Quantity(Constants.Materials.Paint)
-      context.become(awaitDelivery)
-  }
+  context.parent ! new Quantity(Constants.Materials.Paint)
 
-  def awaitDelivery: Receive = {
+  def receive: Receive = {
     case Delivered =>
       context.parent ! WallsPainted
       context.stop(self)

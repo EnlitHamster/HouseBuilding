@@ -2,21 +2,26 @@ import Message.Operation._
 import Message.Quantity
 import akka.actor.SupervisorStrategy._
 import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
+import akka.pattern.ask
+import akka.util.Timeout
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 class ConstructionCompany extends Actor {
   val MaterialManager: ActorRef = context.actorOf(Props[MaterialManager], s"MaterialManager")
+
+  MaterialManager ! new Quantity(50)
+  context.become(awaitDelivery)
 
   def receive: Receive = {
     //-------------------
     // BUILDING OPERATIONS
     //-------------------
 
-    case BuildHouse =>
-      MaterialManager ! new Quantity(100)
-      context.become(awaitDelivery)
     case FramePrepared =>
-      context.actorOf(Props[InteriorManager], s"InteriorManager") ! PrepareInterior
-      context.actorOf(Props[ExteriorManager], s"ExteriorManager") ! PrepareExterior
+      context.actorOf(Props[InteriorManager], s"InteriorManager")
+      context.actorOf(Props[ExteriorManager], s"ExteriorManager")
     case InteriorPrepared | ExteriorPrepared => context.become(awaitLast)
 
     //--------------------
@@ -29,7 +34,7 @@ class ConstructionCompany extends Actor {
   def awaitDelivery: Receive = {
     case Delivered =>
       context.become(receive)
-      context.actorOf(Props[FrameManager], s"FrameManager") ! PrepareFrame
+      context.actorOf(Props[FrameManager], s"FrameManager")
 
     //--------------------
     // MATERIAL OPERATIONS
@@ -54,8 +59,14 @@ class ConstructionCompany extends Actor {
   // Exception management
   override val supervisorStrategy: OneForOneStrategy = OneForOneStrategy() {
     case _: InsufficientMaterialsException =>
-      MaterialManager ! new Quantity(100)
-      Resume
+      if (handle(MaterialManager, new Quantity(100)) == Delivered) Resume
+      else Escalate
     case _: BadWeatherException => Restart
+  }
+
+  def handle(actor: ActorRef, msg: Any, time: FiniteDuration = 5 seconds): Any = {
+    implicit val Timeout: Timeout = time
+    val Ask = actor ? msg
+    Await.result(Ask, Timeout.duration)
   }
 }

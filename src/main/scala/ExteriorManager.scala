@@ -5,20 +5,16 @@ import akka.actor.Actor
 import scala.util.Random
 
 class ExteriorManager extends Actor {
+  context.parent ! new Quantity(Constants.Materials.Concrete)
+  context.parent ! new Quantity(Constants.Materials.Logs)
+
   def receive: Receive = {
-    case PrepareExterior =>
-      context.parent ! new Quantity(Constants.Materials.Concrete)
-      context.parent ! new Quantity(Constants.Materials.Logs)
-      context.become(awaitFirstDelivery)
+    case Delivered => context.become(awaitDelivery)
   }
 
-  def awaitFirstDelivery: Receive = {
-    case Delivered => context.become(awaitSecondDelivery)
-  }
-
-  def awaitSecondDelivery: Receive = {
+  def awaitDelivery: Receive = {
     case Delivered =>
-      if (Random.nextInt(99) > 79) throw BadWeatherException(self, PrepareSite)
+      if (Random.nextInt(99) > 79) throw BadWeatherException()
       context.parent ! ExteriorPrepared
       context.stop(self)
   }
