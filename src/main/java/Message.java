@@ -6,6 +6,7 @@ public abstract class Message {
         // BUILDING
         //---------
 
+        BuildHouse,
         SitePrepared,
         WallsBuilt,
         FramePrepared,
@@ -13,6 +14,7 @@ public abstract class Message {
         WindowsFitted,
         InteriorPrepared,
         ExteriorPrepared,
+        HouseBuilt,
 
         //----------
         // MATERIALS

@@ -1,9 +1,19 @@
 import Message.Operation._
 import akka.actor.{ActorSystem, Props}
+import akka.pattern.ask
+import akka.util.Timeout
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val system: ActorSystem = ActorSystem(s"System")
-    system.actorOf(Props[ConstructionCompany], s"Company")
+    implicit val Timeout: Timeout = 1 minute
+
+    val System: ActorSystem = ActorSystem(s"System")
+    val Future = System.actorOf(Props[ConstructionCompany], s"Company") ? BuildHouse
+    if (Await.result(Future, Timeout.duration) == HouseBuilt) println("House built")
+    else println("Oopsie")
   }
 }
