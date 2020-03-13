@@ -2,5 +2,9 @@
 *.log
 .idea/workspace.xml
 .idea/misc.xml
-project/
-target/
+.idea/sbt.xml
+.idea/libraries/*
+project/project/*
+project/target/*
+target/*
+
