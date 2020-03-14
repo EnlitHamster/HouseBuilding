@@ -8,5 +8,6 @@ class Painter extends Actor {
     case Delivered =>
       context.parent ! WallsPainted
       context.stop(self)
+    case NotDelivered => context.parent ! new Quantity(-Constants.Materials.Paint)
   }
 }

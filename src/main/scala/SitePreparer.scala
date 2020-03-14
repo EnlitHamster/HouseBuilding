@@ -11,5 +11,6 @@ class SitePreparer extends Actor {
       if (Random.nextInt(99) > 79) throw BadWeatherException()
       context.parent ! SitePrepared
       context.stop(self)
+    case NotDelivered => context.parent ! new Quantity(-Constants.Materials.Concrete)
   }
 }

@@ -8,5 +8,6 @@ class BrickLayer extends Actor {
     case Delivered =>
       context.parent ! WallsBuilt
       context.stop(self)
+    case NotDelivered => context.parent ! new Quantity(-Constants.Materials.Bricks)
   }
 }

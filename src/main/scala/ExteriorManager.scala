@@ -7,6 +7,8 @@ class ExteriorManager extends Actor {
   context.parent ! new Quantity(-Constants.Materials.Concrete)
   context.parent ! new Quantity(-Constants.Materials.Logs)
 
+  // TODO: Create Enum for Constants.Materials to handle parallel situations like this
+
   def receive: Receive = {
     case Delivered => context.become(awaitDelivery)
   }

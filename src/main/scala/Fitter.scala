@@ -8,5 +8,6 @@ class Fitter extends Actor {
     case Delivered =>
       context.parent ! WindowsFitted
       context.stop(self)
+    case NotDelivered => context.parent ! new Quantity(-Constants.Materials.Windows)
   }
 }
