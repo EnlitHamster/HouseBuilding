@@ -1,9 +1,8 @@
-import Message.Operation._
-import Message.Quantity
+import Operation._
 import akka.actor.Actor
 
 class Painter extends Actor {
-  context.parent ! new Quantity(Constants.Materials.Paint)
+  context.parent ! new Quantity(-Constants.Materials.Paint)
 
   def receive: Receive = {
     case Delivered =>

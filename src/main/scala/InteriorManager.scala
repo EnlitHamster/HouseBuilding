@@ -1,5 +1,4 @@
-import Message.Operation._
-import Message.Quantity
+import Operation._
 import akka.actor.{Actor, Props}
 
 class InteriorManager extends Actor {

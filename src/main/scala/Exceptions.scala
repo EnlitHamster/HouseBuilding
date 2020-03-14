@@ -1,4 +1,3 @@
-import Message.{Operation, Quantity}
 import akka.actor.ActorRef
 
 // Exception classes

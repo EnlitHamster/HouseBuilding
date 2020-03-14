@@ -1,4 +1,4 @@
-import Message.Operation._
+import Operation._
 
 import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout

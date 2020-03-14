@@ -1,9 +1,8 @@
-import Message.Operation._
-import Message.Quantity
+import Operation._
 import akka.actor.Actor
 
 class Fitter extends Actor {
-  context.parent ! new Quantity(Constants.Materials.Windows)
+  context.parent ! new Quantity(-Constants.Materials.Windows)
 
   def receive: Receive = {
     case Delivered =>

@@ -1,12 +1,11 @@
-import Message.Operation._
-import Message.Quantity
+import Operation._
 import akka.actor.Actor
 
 import scala.util.Random
 
 class ExteriorManager extends Actor {
-  context.parent ! new Quantity(Constants.Materials.Concrete)
-  context.parent ! new Quantity(Constants.Materials.Logs)
+  context.parent ! new Quantity(-Constants.Materials.Concrete)
+  context.parent ! new Quantity(-Constants.Materials.Logs)
 
   def receive: Receive = {
     case Delivered => context.become(awaitDelivery)
