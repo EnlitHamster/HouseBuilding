@@ -12,20 +12,31 @@ class MaterialManager extends Actor {
 
   // Synchronization can be achieved through this.synchronized {...}
 
-  var tl = 0          // Time lived since last InsufficientMaterialsException
+  var waitingOrder = true;
   var materials = 0
 
   override def receive: Receive = {
-    case q: Quantity =>
-      println(s"Order for ${q.Quantity}")
-      if (q.Quantity < 0 && Math.abs(q.Quantity) > materials) this.synchronized {
-        tl = 0;
-        sender() ! NotDelivered
-        throw InsufficientMaterialsException(sender(), q)
+    case o: Order =>
+      println(s"Order for ${o.Material.Cost}. Available $materials material")
+
+      if (o.Material.equals(Material.Batch)) {
+        materials += o.Material.Cost
+        waitingOrder = false
+        sender() ! new Delivery(true, o.Material)
+      } else if (o.Material.Cost > materials) this.synchronized {
+        sender() ! new Delivery(false, o.Material)
+        if (!waitingOrder) {
+          waitingOrder = true
+          throw InsufficientMaterialsException()
+        }
       } else {
-        tl += 1
-        materials += q.Quantity
-        sender() ! Delivered
+        materials -= o.Material.Cost
+        sender() ! new Delivery(true, o.Material)
       }
+  }
+
+  override def postStop(): Unit = {
+    super.postStop()
+    println(s"$materials remaining materials")
   }
 }
