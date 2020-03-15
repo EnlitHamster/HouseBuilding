@@ -10,7 +10,7 @@ class FrameManager extends Actor {
     case WallsBuilt =>
       context.parent ! FramePrepared
       context.stop(self)
-    case q: Quantity => context.parent.forward(q)
+    case q: Order => context.parent.forward(q)
   }
 
   // Exception management

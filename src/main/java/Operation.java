@@ -4,7 +4,6 @@ public enum Operation {
     //---------
     // BUILDING
     //---------
-
     BuildHouse,
     SitePrepared,
     WallsBuilt,
@@ -14,10 +13,4 @@ public enum Operation {
     InteriorPrepared,
     ExteriorPrepared,
     HouseBuilt,
-
-    //----------
-    // MATERIALS
-    //----------
-
-    Delivered
 }

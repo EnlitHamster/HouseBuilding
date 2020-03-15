@@ -9,6 +9,6 @@ class InteriorManager extends Actor {
     case WindowsFitted =>
       context.parent ! InteriorPrepared
       context.stop(self)
-    case q: Quantity => context.parent.forward(q)
+    case q: Order => context.parent.forward(q)
   }
 }
