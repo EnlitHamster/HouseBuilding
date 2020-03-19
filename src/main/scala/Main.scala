@@ -13,7 +13,7 @@ object Main {
 
     val System: ActorSystem = ActorSystem(s"System")
     val Future = System.actorOf(Props[ConstructionCompany], s"Company") ? BuildHouse
-    if (Await.result(Future, Timeout.duration) == HouseBuilt) println("House built")
-    else println("Oopsie")
+    if (Await.result(Future, Timeout.duration) == HouseBuilt) println(s"House built")
+    else println(s"Oopsie")
   }
 }

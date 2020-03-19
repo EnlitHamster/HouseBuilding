@@ -23,7 +23,7 @@ class ConstructionCompany extends Actor {
     // MATERIAL & SETUP OPERATIONS
     //----------------------------
     case q: Order => MaterialManager.forward(q)
-    case BuildHouse => client = sender()
+    case BuildHouse => client = sender
   }
 
   // Waiting for first materials to be shipped
@@ -33,7 +33,7 @@ class ConstructionCompany extends Actor {
         context.become(receive)
         context.actorOf(Props[FrameManager], s"FrameManager")
       } else MaterialManager ! new Order(d.Material)
-    case BuildHouse => client = sender()
+    case BuildHouse => client = sender
   }
 
   // Receive status for parallel operations

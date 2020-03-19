@@ -1,4 +1,3 @@
-import Operation._
 import akka.actor.Actor
 
 class MaterialManager extends Actor {
@@ -17,8 +16,6 @@ class MaterialManager extends Actor {
 
   override def receive: Receive = {
     case o: Order =>
-      println(s"Order for ${o.Material.Cost}. Available $materials material")
-
       if (o.Material.equals(Material.Batch)) {
         materials += o.Material.Cost
         waitingOrder = false
@@ -33,10 +30,5 @@ class MaterialManager extends Actor {
         materials -= o.Material.Cost
         sender() ! new Delivery(true, o.Material)
       }
-  }
-
-  override def postStop(): Unit = {
-    super.postStop()
-    println(s"$materials remaining materials")
   }
 }
