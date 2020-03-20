@@ -1,6 +1,6 @@
 ## Core knowledge
 
-Basing the terms used on the military accountability system, we find that the basic equation that allows such systems to exist is the following:
+Basing the terms used on the military hierarchy system, we find that the basic equation that allows such systems to exist is the following:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\left(\begin{array}{c}policies\end{array}\right)&space;\cdot&space;\left(\begin{array}{c}reports\end{array}\right)&space;=&space;strategy" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\left(\begin{array}{c}policies\end{array}\right)&space;\cdot&space;\left(\begin{array}{c}reports\end{array}\right)&space;=&space;strategy" title="\left(\begin{array}{c}policies\end{array}\right) \cdot \left(\begin{array}{c}reports\end{array}\right) = strategy"/></a>
 
