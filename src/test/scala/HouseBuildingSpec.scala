@@ -14,8 +14,8 @@ import scala.reflect.ClassTag
 class HouseBuildingSpec extends AnyFlatSpec {
   implicit val Timeout: Timeout = 1 minute
 
-  s"A SitePreparer" should s"prepare the site" in test[SitePreparer](SitePrepared)
-  s"A BrickLayer" should s"build the walls" in test[BrickLayer](WallsBuilt, s"Bad Weather")
+  s"A SitePreparer" should s"prepare the site" in test[SitePreparer](SitePrepared, s"Bad weather")
+  s"A BrickLayer" should s"build the walls" in test[BrickLayer](WallsBuilt)
   s"A Painter" should s"paint the interiors" in test[Painter](WallsPainted)
   s"A Fitter" should s"fit the windows" in test[Fitter](WindowsFitted)
   s"A FrameManager" should s"prepare the frame" in test[FrameManager](FramePrepared)
@@ -44,7 +44,7 @@ class ActorTester[Test <: Actor: ClassTag] extends Actor {
 
   override val supervisorStrategy: OneForOneStrategy = OneForOneStrategy() {
     case e: Exception =>
-      context.parent ! e.getMessage
+      client ! e.getMessage
       context.stop(self)
       Stop
   }
