@@ -4,7 +4,7 @@ import scala.reflect.ClassTag
 
 import scala.language.postfixOps
 
-class RInfo[T: ClassTag](var memory: Int) {
+class RInfo[T: ClassTag](memory: Int) {
   protected val Information: RQueue[T] = new RQueue[T](memory)
 
   def ?=(obj: Any): Boolean = obj match {
@@ -27,4 +27,6 @@ class RInfo[T: ClassTag](var memory: Int) {
   def >> : T = Information actual
   def >>> : Array[T] = Information toArray
   def resize(newMemory: Int): RInfo[T] = {Information.resize(newMemory); this}
+  def size: Int = Information.size
+  def length: Int = Information.length
 }
