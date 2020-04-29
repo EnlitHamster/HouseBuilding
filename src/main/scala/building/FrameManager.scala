@@ -17,7 +17,7 @@ class FrameManager extends AccountTaker {
   var brickLayer: ActorRef = _
   context.actorOf(Props[SitePreparer], s"SitePreparer")
 
-  def receive: Receive = {
+  override def handle: Receive = {
     case SitePrepared => brickLayer = startSupervision[BrickLayer](s"BrickLayer")
     case WallsBuilt =>
       stopSupervision(brickLayer)
