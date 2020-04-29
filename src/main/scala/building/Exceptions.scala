@@ -1,4 +1,4 @@
-import akka.actor.ActorRef
+package building
 
 // Exception classes
 // Contains all the exceptions that do not require a complex implementation

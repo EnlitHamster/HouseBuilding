@@ -1,8 +1,9 @@
-import Operation._
+import building.Operation._
 import akka.actor.SupervisorStrategy.Stop
 import akka.actor.{Actor, ActorRef, ActorSystem, OneForOneStrategy, Props}
 import akka.util.Timeout
 import akka.pattern.ask
+import building.{BrickLayer, ConstructionCompany, Delivery, ExteriorManager, Fitter, FrameManager, InteriorManager, Order, Painter, SitePreparer}
 import org.scalatest.Assertion
 import org.scalatest.flatspec.AnyFlatSpec
 
@@ -14,13 +15,13 @@ import scala.reflect.ClassTag
 class HouseBuildingSpec extends AnyFlatSpec {
   implicit val Timeout: Timeout = 1 minute
 
-  s"A SitePreparer" should s"prepare the site" in test[SitePreparer](SitePrepared, s"Bad weather")
-  s"A BrickLayer" should s"build the walls" in test[BrickLayer](WallsBuilt)
-  s"A Painter" should s"paint the interiors" in test[Painter](WallsPainted)
-  s"A Fitter" should s"fit the windows" in test[Fitter](WindowsFitted)
-  s"A FrameManager" should s"prepare the frame" in test[FrameManager](FramePrepared)
-  s"An InteriorManager" should s"prepare the interiors" in test[InteriorManager](InteriorPrepared)
-  s"An ExteriorManager" should s"prepare the exteriors" in test[ExteriorManager](ExteriorPrepared, s"Bad weather")
+  s"A building.SitePreparer" should s"prepare the site" in test[SitePreparer](SitePrepared, s"Bad weather")
+  s"A building.BrickLayer" should s"build the walls" in test[BrickLayer](WallsBuilt)
+  s"A building.Painter" should s"paint the interiors" in test[Painter](WallsPainted)
+  s"A building.Fitter" should s"fit the windows" in test[Fitter](WindowsFitted)
+  s"A building.FrameManager" should s"prepare the frame" in test[FrameManager](FramePrepared)
+  s"An building.InteriorManager" should s"prepare the interiors" in test[InteriorManager](InteriorPrepared)
+  s"An building.ExteriorManager" should s"prepare the exteriors" in test[ExteriorManager](ExteriorPrepared, s"Bad weather")
   s"A company" should s"build a house" in assert(Await.result(ActorSystem(s"System").actorOf(Props[ConstructionCompany], s"Tester") ? BuildHouse, Timeout.duration).equals(HouseBuilt))
 
   def test[Test <: Actor: ClassTag](tests: Any*): Assertion = {

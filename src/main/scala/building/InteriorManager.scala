@@ -1,5 +1,7 @@
-import Operation._
+package building
+
 import akka.actor.{Actor, Props}
+import building.Operation._
 
 class InteriorManager extends Actor {
   context.actorOf(Props[Painter], s"Painter")

@@ -1,3 +1,5 @@
+package building;
+
 public class Delivery {
     public final boolean Check;
     public final Material Material;

@@ -1,3 +1,5 @@
+package building;
+
 public enum Material {
     Batch(50),
     Concrete(20),

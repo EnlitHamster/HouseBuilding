@@ -1,13 +1,15 @@
-import Operation._
-import akka.actor.Actor
+package building
 
-class BrickLayer extends Actor {
-  context.parent ! new Order(Material.Bricks)
+import akka.actor.Actor
+import building.Operation._
+
+class Painter extends Actor {
+  context.parent ! new Order(Material.Paint)
 
   def receive: Receive = {
     case d: Delivery =>
       if (d.Check) {
-        context.parent ! WallsBuilt
+        context.parent ! WallsPainted
         context.stop(self)
       } else context.parent ! new Order(d.Material)
   }

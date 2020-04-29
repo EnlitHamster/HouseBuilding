@@ -1,5 +1,7 @@
-import Operation._
+package building
+
 import akka.actor.Actor
+import building.Operation._
 
 class Fitter extends Actor {
   context.parent ! new Order(Material.Windows)

@@ -1,10 +1,9 @@
-package framework
+package building.framework.structures
+
+import building.framework.Predicts.{checkArg, checkNotNull}
 
 import scala.collection.mutable
-import Predicts._
-
 import scala.language.postfixOps
-
 import scala.reflect.ClassTag
 
 class RQueue[T: ClassTag](var size: Int) {

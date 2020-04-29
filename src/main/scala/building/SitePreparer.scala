@@ -1,5 +1,7 @@
-import Operation._
+package building
+
 import akka.actor.Actor
+import building.Operation._
 
 import scala.util.Random
 

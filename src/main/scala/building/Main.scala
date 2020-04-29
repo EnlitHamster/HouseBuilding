@@ -1,11 +1,12 @@
-import Operation._
-import akka.actor.{ActorSystem, Props}
-import akka.pattern.ask
-import akka.util.Timeout
+package building
 
+import akka.actor.{ActorSystem, Props}
+import akka.util.Timeout
+import building.Operation._
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import akka.pattern.ask
 
 object Main {
   def main(args: Array[String]): Unit = {

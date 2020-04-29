@@ -1,6 +1,8 @@
-import Operation._
+package building
+
 import akka.actor.SupervisorStrategy._
 import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
+import building.Operation._
 
 import scala.language.postfixOps
 
@@ -8,6 +10,7 @@ class ConstructionCompany extends Actor {
   var client: ActorRef = _
   val MaterialManager: ActorRef = context.actorOf(Props[MaterialManager], s"MaterialManager")
   context.become(awaitCheck)
+  println(s"Started Company")
   MaterialManager ! new Order(Material.Batch)
 
   def receive: Receive = {

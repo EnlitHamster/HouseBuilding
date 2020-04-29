@@ -1,3 +1,5 @@
+package building;
+
 // Enumerator containing all the Actors possible messages
 // Used to avoid DeadLetters and standardizing communication
 public enum Operation {
@@ -13,4 +15,9 @@ public enum Operation {
     InteriorPrepared,
     ExteriorPrepared,
     HouseBuilt,
+
+    //--------------
+    // COMMUNICATION
+    //--------------
+    dayPassed
 }
