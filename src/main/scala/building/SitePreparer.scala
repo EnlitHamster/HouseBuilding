@@ -1,12 +1,13 @@
 package building
 
 import akka.actor.Actor
-import building.Operation._
+import building.structures.Operation._
+import building.structures.{Delivery, Material, Order}
 
 import scala.util.Random
 
 class SitePreparer extends Actor {
-  context.parent ! new Order(Material.Concrete)
+  context.parent ! Order(Material.Concrete)
 
   def receive: Receive = {
     case d: Delivery =>
@@ -16,7 +17,7 @@ class SitePreparer extends Actor {
         context.stop(self)
       } else {
         println(s"[${self.path.name}] Not enough materials")
-        context.parent ! new Order(d.Material)
+        context.parent ! Order(d.Material)
       }
   }
 }

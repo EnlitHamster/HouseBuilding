@@ -2,16 +2,17 @@ package building
 
 import akka.actor.SupervisorStrategy._
 import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
-import building.Operation._
+import building.structures.Operation._
+import building.structures.{Delivery, Material, Order}
 
 import scala.language.postfixOps
 
 class ConstructionCompany extends Actor {
   var client: ActorRef = _
   val MaterialManager: ActorRef = context.actorOf(Props[MaterialManager], s"MaterialManager")
-  context.become(awaitCheck)
   println(s"Started Company")
-  MaterialManager ! new Order(Material.Batch)
+  context.become(awaitCheck)
+  MaterialManager ! Order(Material.Batch)
 
   def receive: Receive = {
     //--------------------
@@ -35,7 +36,7 @@ class ConstructionCompany extends Actor {
       if (d.Check) {
         context.become(receive)
         context.actorOf(Props[FrameManager], s"FrameManager")
-      } else MaterialManager ! new Order(d.Material)
+      } else MaterialManager ! Order(d.Material)
     case BuildHouse => client = sender
   }
 
@@ -55,7 +56,7 @@ class ConstructionCompany extends Actor {
   // Exception management
   override val supervisorStrategy: OneForOneStrategy = OneForOneStrategy() {
     case _: InsufficientMaterialsException =>
-      MaterialManager ! new Order(Material.Batch)
+      MaterialManager ! Order(Material.Batch)
       Resume
     case _: BadWeatherException => Restart
   }

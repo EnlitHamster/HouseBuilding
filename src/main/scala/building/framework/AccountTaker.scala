@@ -1,6 +1,7 @@
 package building.framework
 
 import akka.actor.{Actor, ActorRef, Props}
+import building.framework.structures.Message
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -27,7 +28,7 @@ trait AccountTaker extends AccountableActor {
 
   def request(aGiver: ActorRef): Boolean = {
     if (supervised contains aGiver) {
-      aGiver ! Message.REPORT
+      aGiver ! Message.Report
       true
     } else false
   }

@@ -2,7 +2,7 @@ package building
 
 import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout
-import building.Operation._
+import building.structures.Operation._
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps

@@ -1,6 +1,7 @@
 package building
 
 import akka.actor.Actor
+import building.structures.{Material, Order}
 
 class MaterialManager extends Actor {
 
@@ -13,24 +14,24 @@ class MaterialManager extends Actor {
 
   // Synchronization can be achieved through this.synchronized {...}
 
-  var waitingOrder = true;
+  var waitingOrder = true
   var materials = 0
 
   override def receive: Receive = {
     case o: Order =>
       if (o.Material.equals(Material.Batch)) {
-        materials += o.Material.Cost
+        materials += o.Material.id
         waitingOrder = false
-        sender() ! new Delivery(true, o.Material)
-      } else if (o.Material.Cost > materials) this.synchronized {
-        sender() ! new Delivery(false, o.Material)
+        sender() ! structures.Delivery(Check = true, o.Material)
+      } else if (o.Material.id > materials) this.synchronized {
+        sender() ! structures.Delivery(Check = false, o.Material)
         if (!waitingOrder) {
           waitingOrder = true
           throw InsufficientMaterialsException()
         }
       } else {
-        materials -= o.Material.Cost
-        sender() ! new Delivery(true, o.Material)
+        materials -= o.Material.id
+        sender() ! structures.Delivery(Check = true, o.Material)
       }
   }
 }

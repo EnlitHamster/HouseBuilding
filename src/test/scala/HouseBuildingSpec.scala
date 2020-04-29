@@ -1,9 +1,10 @@
-import building.Operation._
+import building.structures.Operation._
 import akka.actor.SupervisorStrategy.Stop
 import akka.actor.{Actor, ActorRef, ActorSystem, OneForOneStrategy, Props}
 import akka.util.Timeout
 import akka.pattern.ask
-import building.{BrickLayer, ConstructionCompany, Delivery, ExteriorManager, Fitter, FrameManager, InteriorManager, Order, Painter, SitePreparer}
+import building.structures.{Delivery, Order}
+import building.{BrickLayer, ConstructionCompany, ExteriorManager, Fitter, FrameManager, InteriorManager, Painter, SitePreparer}
 import org.scalatest.Assertion
 import org.scalatest.flatspec.AnyFlatSpec
 

@@ -1,7 +1,7 @@
 package building.reports
 
-import building.Weather
 import building.framework.structures.RInfo
+import building.structures.Weather.Weather
 
 class WeatherInfo(memory: Int) extends RInfo[Weather](memory) {
   def %(weather: Weather): Double = Information.toArray.count(p => p == weather)

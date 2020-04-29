@@ -1,12 +1,12 @@
 package building.policies
 
-import building.Weather
 import building.framework.ReportPolicy
 import building.framework.ReportPolicy.HandleResponse._
 import building.reports.WorkerReport
+import building.structures.Weather._
 
 object WorkerReportPolicy {
-  val BaseProgressExpectation: Double = 6 * Weather.SUNNY.progress
+  val BaseProgressExpectation: Double = 6 * Sunny.id
   val OkMult: Double = 1.0
   val DefMult: Double = 1.5
   val OverMult: Double = 0.75

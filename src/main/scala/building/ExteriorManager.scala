@@ -1,26 +1,28 @@
 package building
 
 import akka.actor.Actor
-import building.Operation._
+import building.structures.Operation._
+import building.structures.Order
+import building.structures.Material._
 
 import scala.util.Random
 
 class ExteriorManager extends Actor {
-  context.parent ! new Order(Material.Concrete)
-  context.parent ! new Order(Material.Logs)
+  context.parent ! Order(Concrete)
+  context.parent ! Order(Logs)
 
   def receive: Receive = {
-    case d: Delivery =>
+    case d: structures.Delivery =>
       if (d.Check) context.become(awaitDelivery)
-      else context.parent ! new Order(d.Material)
+      else context.parent ! Order(d.Material)
   }
 
   def awaitDelivery: Receive = {
-    case d: Delivery =>
+    case d: structures.Delivery =>
       if (d.Check) {
         if (Random.nextInt(99) > 79) throw BadWeatherException()
         context.parent ! ExteriorPrepared
         context.stop(self)
-      } else context.parent ! new Order(d.Material)
+      } else context.parent ! Order(d.Material)
   }
 }
