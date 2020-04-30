@@ -3,7 +3,7 @@ package building.framework
 object ReportPolicy {
   object HandleResponse extends Enumeration {
     type HandleResponse = Value
-    val NoHandle: ReportPolicy.HandleResponse.Value = Value
+    val NoHandle, StopHandle: HandleResponse = Value
   }
 }
 

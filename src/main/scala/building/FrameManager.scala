@@ -5,7 +5,6 @@ import akka.actor.{ActorRef, OneForOneStrategy, Props}
 import building.structures.Operation._
 import building.framework.AccountTaker
 import building.framework.ReportPolicy.HandleResponse._
-import building.framework.structures.Message
 import building.policies.WorkerReportPolicy
 import building.reports.WorkerReport
 import building.structures.{Operation, Order}
@@ -15,13 +14,13 @@ class FrameManager extends AccountTaker {
   var daysElapsed: Int = 0
   val workerPolicy: WorkerReportPolicy = new WorkerReportPolicy
 
-  var brickLayer: ActorRef = _
+  var brickLayer: ActorRef = startSupervision[BrickLayer](s"BrickLayer")
 
-  handle(forwardOrder, handleWorkerReport, dayPassed, startBirckLaying, workFinished)
+  handle(forwardOrder, handleWorkerReport, dayPassed, startBrickLaying, workFinished)
   context.actorOf(Props[SitePreparer], s"SitePreparer")
 
   def forwardOrder: Receive = {case q: Order => context.parent.forward(q)}
-  def startBirckLaying: Receive = {case SitePrepared => brickLayer = startSupervision[BrickLayer](s"BrickLayer")}
+  def startBrickLaying: Receive = {case SitePrepared => start(brickLayer)}
 
   def workFinished: Receive = {
     case WallsBuilt =>
@@ -33,7 +32,10 @@ class FrameManager extends AccountTaker {
   def dayPassed: Receive = {
     case Operation.dayPassed =>
       daysElapsed += 1
-      if (daysElapsed == WeeklyReport) request(brickLayer)
+      if (daysElapsed == WeeklyReport) {
+        request(brickLayer)
+        daysElapsed = 0
+      }
   }
 
   def handleWorkerReport: Receive = {
@@ -41,8 +43,10 @@ class FrameManager extends AccountTaker {
       val Mult: Double = workerPolicy.handle().apply(report.getProgress) match {
         case d: Double => d
         case NoHandle => 1.0
+        case StopHandle => unhandle(dayPassed); println(s"--" + self.path.name + "-- Stop handling dayPassed"); 1.0
       }
-      println(s"New multiplier: " + Mult)
+
+      println(s"--" + self.path.name + "-- New multiplier: " + Mult)
       brickLayer ! Mult
   }
 

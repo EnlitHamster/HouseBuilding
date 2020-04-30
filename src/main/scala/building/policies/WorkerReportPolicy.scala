@@ -25,7 +25,7 @@ class WorkerReportPolicy extends ReportPolicy {
   override def handle(): PartialFunction[Any, Any] = {
     case report: WorkerReport if report.getProgress < expectedProgress => expectedProgress = getExpected(DefExpMult); DefMult
     case report: WorkerReport if report.getProgress > expectedProgress => expectedProgress = getExpected(OverExpMult); OverMult
-    case _: WorkerReport => expectedProgress = BaseProgressExpectation; OkMult
+    case _: WorkerReport => expectedProgress = BaseProgressExpectation; StopHandle
     case _ => NoHandle
   }
 }

@@ -5,10 +5,12 @@ import akka.actor.Actor
 import scala.collection.mutable.ListBuffer
 
 trait AccountableActor extends Actor {
-  protected var preReceives: ListBuffer[Receive] = ListBuffer[Receive]()
-  protected var handles: ListBuffer[Receive] = ListBuffer[Receive]()
+  protected[framework] var preReceives: ListBuffer[Receive] = ListBuffer[Receive]()
+  protected[framework] var handles: ListBuffer[Receive] = ListBuffer[Receive]()
 
-  def handle(receive: Receive*): Unit = handles ++= receive
+  def handle(receives: Receive*): Unit = handles ++= receives
+  def unhandle(receives: Receive*): Unit = handles --= receives
+  def swap(oldReceive: Receive, newReceive: Receive): Unit = {handles -= oldReceive; handles += newReceive}
 
   override final def receive: Receive = new Receive {
     def isDefinedAt(x: Any): Boolean =

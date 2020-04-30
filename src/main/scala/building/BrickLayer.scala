@@ -19,15 +19,14 @@ class BrickLayer extends AccountGiver {
 
   handle(adjustMultiplier, receiveDelivery)
 
-  Supervisor ! Order(Material.Bricks)
-
+  override def start(): Unit = {super.start(); Supervisor ! Order(Material.Bricks)}
   override def generateReport: Report = WorkerReport(Progress, DaysWeather)
-  def adjustMultiplier: Receive = {case d: Double => multiplier = d}
+  def adjustMultiplier: Receive = {case d: Double => println(s"--" + self.path.name + "-- New Multiplier: " + d); multiplier = d}
 
   def receiveDelivery: Receive = {
     case d: Delivery =>
       if (d.Check) {
-        println(s"Started BrickLayer construction")
+        println(s"--" + self.path.name + "-- Start")
         while (Progress.>> < 100) {
           var weather: Weather = null
           Random.nextInt(10) match {

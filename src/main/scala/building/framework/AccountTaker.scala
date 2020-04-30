@@ -15,6 +15,7 @@ trait AccountTaker extends AccountableActor {
   def addPolicy(policy: Policy): Unit = if (!hasPolicyType[policy.type]) policies = policy :: policies
   def removePolicy(policy: Policy): Unit = if (policies contains policy) policies = policies filter (x => !x.equals(policy))
   def hasPolicyType[T <: Any: ClassTag]: Boolean = policies exists (x => x.isInstanceOf[T])*/
+
   var supervised: List[ActorRef] = Nil
   val Messages: mutable.Queue[Any] = mutable.Queue[Any]()
 
@@ -29,6 +30,13 @@ trait AccountTaker extends AccountableActor {
   def request(aGiver: ActorRef): Boolean = {
     if (supervised contains aGiver) {
       aGiver ! Message.Report
+      true
+    } else false
+  }
+
+  def start(aGiver: ActorRef): Boolean = {
+    if (supervised contains aGiver) {
+      aGiver ! Message.Start
       true
     } else false
   }
