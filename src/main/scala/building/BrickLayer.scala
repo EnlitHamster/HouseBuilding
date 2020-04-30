@@ -15,7 +15,7 @@ class BrickLayer extends AccountGiver {
   val Progress: NumInfo = new NumInfo(Memory) << 0.0
   val DaysWeather: WeatherInfo = new WeatherInfo(Memory)
 
-  var multiplier: Double = 1.0;
+  var multiplier: Double = 1.0
 
   handle(adjustMultiplier, receiveDelivery)
 

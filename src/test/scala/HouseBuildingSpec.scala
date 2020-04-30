@@ -35,7 +35,7 @@ class ActorTester[Test <: Actor: ClassTag] extends Actor {
   var client: ActorRef = _
 
   override def receive: Receive = {
-    case o: Order => sender ! new Delivery(true, o.Material)
+    case o: Order => sender ! Delivery(true, o.Material)
     case s"Start" =>
       client = sender
       context.actorOf(Props[Test], s"Tested")
