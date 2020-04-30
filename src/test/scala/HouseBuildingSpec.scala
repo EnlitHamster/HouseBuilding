@@ -3,6 +3,8 @@ import akka.actor.SupervisorStrategy.Stop
 import akka.actor.{Actor, ActorRef, ActorSystem, OneForOneStrategy, Props}
 import akka.util.Timeout
 import akka.pattern.ask
+import building.framework.AccountableActor
+import building.framework.structures.Message
 import building.structures.{Delivery, Order}
 import building.{BrickLayer, ConstructionCompany, ExteriorManager, Fitter, FrameManager, InteriorManager, Painter, SitePreparer}
 import org.scalatest.Assertion
@@ -17,13 +19,20 @@ class HouseBuildingSpec extends AnyFlatSpec {
   implicit val Timeout: Timeout = 1 minute
 
   s"A building.SitePreparer" should s"prepare the site" in test[SitePreparer](SitePrepared, s"Bad weather")
-  s"A building.BrickLayer" should s"build the walls" in test[BrickLayer](WallsBuilt)
+  s"A building.BrickLayer" should s"build the walls" in {
+
+  }
   s"A building.Painter" should s"paint the interiors" in test[Painter](WallsPainted)
   s"A building.Fitter" should s"fit the windows" in test[Fitter](WindowsFitted)
   s"A building.FrameManager" should s"prepare the frame" in test[FrameManager](FramePrepared)
   s"An building.InteriorManager" should s"prepare the interiors" in test[InteriorManager](InteriorPrepared)
   s"An building.ExteriorManager" should s"prepare the exteriors" in test[ExteriorManager](ExteriorPrepared, s"Bad weather")
   s"A company" should s"build a house" in assert(Await.result(ActorSystem(s"System").actorOf(Props[ConstructionCompany], s"Tester") ? BuildHouse, Timeout.duration).equals(HouseBuilt))
+
+  def accountableTest[Test <: AccountableActor: ClassTag](tests: Any*): Assertion = {
+    val Result = Await.result(ActorSystem(s"System").actorOf(Props(new AccountableActorTester[Test]), s"Tester") ? s"Start", Timeout.duration)
+    assert(tests.contains(Result))
+  }
 
   def test[Test <: Actor: ClassTag](tests: Any*): Assertion = {
     val Result = Await.result(ActorSystem(s"System").actorOf(Props(new ActorTester[Test]), s"Tester") ? s"Start", Timeout.duration)
@@ -35,10 +44,31 @@ class ActorTester[Test <: Actor: ClassTag] extends Actor {
   var client: ActorRef = _
 
   override def receive: Receive = {
-    case o: Order => sender ! Delivery(true, o.Material)
+    case o: Order => sender ! Delivery(Check = true, o.Material)
     case s"Start" =>
       client = sender
       context.actorOf(Props[Test], s"Tested")
+    case msg =>
+      client ! msg
+      context.stop(self)
+  }
+
+  override val supervisorStrategy: OneForOneStrategy = OneForOneStrategy() {
+    case e: Exception =>
+      client ! e.getMessage
+      context.stop(self)
+      Stop
+  }
+}
+
+class AccountableActorTester[Test <: Actor: ClassTag] extends Actor {
+  var client: ActorRef = _
+
+  override def receive: Receive = {
+    case o: Order => sender ! Delivery(Check = true, o.Material)
+    case s"Start" =>
+      client = sender
+      context.actorOf(Props[Test], s"Tested") ! Message.Start
     case msg =>
       client ! msg
       context.stop(self)
