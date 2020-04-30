@@ -18,7 +18,7 @@ trait AccountTaker extends AccountableActor {
   var supervised: List[ActorRef] = Nil
   val Messages: mutable.Queue[Any] = mutable.Queue[Any]()
 
-  def startSupervision[A <: Actor : ClassTag](name: String): ActorRef = {
+  def startSupervision[A <: AccountGiver : ClassTag](name: String): ActorRef = {
     val Ref: ActorRef = context.actorOf(Props[A], name)
     supervised ::= Ref
     Ref
