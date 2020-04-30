@@ -20,17 +20,17 @@ class MaterialManager extends Actor {
   override def receive: Receive = {
     case o: Order =>
       if (o.Material.equals(Material.Batch)) {
-        materials += o.Material.id
+        materials += o.Material.Cost
         waitingOrder = false
         sender() ! structures.Delivery(Check = true, o.Material)
-      } else if (o.Material.id > materials) this.synchronized {
+      } else if (o.Material.Cost > materials) this.synchronized {
         sender() ! structures.Delivery(Check = false, o.Material)
         if (!waitingOrder) {
           waitingOrder = true
           throw InsufficientMaterialsException()
         }
       } else {
-        materials -= o.Material.id
+        materials -= o.Material.Cost
         sender() ! structures.Delivery(Check = true, o.Material)
       }
   }

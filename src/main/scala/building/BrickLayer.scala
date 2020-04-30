@@ -5,7 +5,7 @@ import building.framework.structures.NumInfo
 import building.framework.{AccountGiver, Report}
 import building.reports.{WeatherInfo, WorkerReport}
 import building.structures.Weather._
-import building.structures.{Delivery, Material, Order}
+import building.structures.{Delivery, Material, Order, Weather}
 
 import scala.util.Random
 
@@ -36,7 +36,7 @@ class BrickLayer extends AccountGiver {
             case _ => weather = Stormy
           }
           DaysWeather << weather
-          Progress + (weather.id * multiplier)
+          Progress + (weather.Progress * multiplier)
           println(Progress >>)
           Supervisor ! dayPassed
         }

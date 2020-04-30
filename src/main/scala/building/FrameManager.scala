@@ -5,6 +5,7 @@ import akka.actor.{ActorRef, OneForOneStrategy, Props}
 import building.structures.Operation._
 import building.framework.AccountTaker
 import building.framework.ReportPolicy.HandleResponse._
+import building.framework.structures.Message
 import building.policies.WorkerReportPolicy
 import building.reports.WorkerReport
 import building.structures.{Operation, Order}

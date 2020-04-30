@@ -6,7 +6,7 @@ import building.reports.WorkerReport
 import building.structures.Weather._
 
 object WorkerReportPolicy {
-  val BaseProgressExpectation: Double = 6 * Sunny.id
+  val BaseProgressExpectation: Double = 6 * Sunny.Progress
   val OkMult: Double = 1.0
   val DefMult: Double = 1.5
   val OverMult: Double = 0.75
