@@ -8,6 +8,7 @@ import building.structures.Weather._
 import building.structures.{Delivery, Material, Order, Weather}
 
 import scala.util.Random
+import scala.language.postfixOps
 
 class BrickLayer extends AccountGiver {
   val Memory: Int = 28
