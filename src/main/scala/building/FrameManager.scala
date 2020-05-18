@@ -16,7 +16,12 @@ class FrameManager extends AccountTaker {
 
   var brickLayer: ActorRef = startSupervision[BrickLayer](s"BrickLayer")
 
-  handle(forwardOrder, handleWorkerReport, dayPassed, startBrickLaying, workFinished)
+  handle(forwardOrder)
+  handle(handleWorkerReport)
+  handle(startBrickLaying)
+  handle(workFinished)
+  val DayPassedID: Int = handle(dayPassed)
+
   context.actorOf(Props[SitePreparer], s"SitePreparer")
 
   def forwardOrder: Receive = {case q: Order => context.parent.forward(q)}

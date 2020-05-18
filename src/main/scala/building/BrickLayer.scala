@@ -18,7 +18,8 @@ class BrickLayer extends AccountGiver {
 
   var multiplier: Double = 1.0
 
-  handle(adjustMultiplier, receiveDelivery)
+  handle(adjustMultiplier)
+  handle(receiveDelivery)
 
   override def start(): Unit = {super.start(); Supervisor ! Order(Material.Bricks)}
   override def generateReport: Report = WorkerReport(Progress, DaysWeather)

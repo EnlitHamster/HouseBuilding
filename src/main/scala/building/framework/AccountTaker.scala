@@ -1,6 +1,6 @@
 package building.framework
 
-import akka.actor.{Actor, ActorRef, Props}
+import akka.actor.{ActorRef, Props}
 import building.framework.structures.Message
 
 import scala.collection.mutable
