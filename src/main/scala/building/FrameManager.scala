@@ -38,6 +38,7 @@ class FrameManager extends AccountTaker {
     case Operation.dayPassed =>
       daysElapsed += 1
       if (daysElapsed == WeeklyReport) {
+        println(s"--" + self.path.name + "-- Request")
         request(brickLayer)
         daysElapsed = 0
       }
@@ -45,10 +46,10 @@ class FrameManager extends AccountTaker {
 
   def handleWorkerReport: Receive = {
     case report: WorkerReport =>
-      val Mult: Double = workerPolicy.handle().apply(report.getProgress) match {
+      val Mult: Double = workerPolicy.handle().apply(report) match {
         case d: Double => d
-        case NoHandle => 1.0
-        case StopHandle => unhandle(dayPassed); println(s"--" + self.path.name + "-- Stop handling dayPassed"); 1.0
+        case NoHandle => println(s"--" + self.path.name + "-- NoHandle"); 1.0
+        case StopHandle => unhandle(DayPassedID); println(s"--" + self.path.name + "-- StopHandle"); 1.0
       }
 
       println(s"--" + self.path.name + "-- New multiplier: " + Mult)
