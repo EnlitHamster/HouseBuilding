@@ -3,8 +3,8 @@ import akka.actor.SupervisorStrategy.Stop
 import akka.actor.{Actor, ActorRef, ActorSystem, OneForOneStrategy, Props}
 import akka.util.Timeout
 import akka.pattern.ask
-import building.framework.AccountableActor
-import building.framework.structures.Message
+import framework.AccountableActor
+import framework.structures.Message
 import building.structures.{Delivery, Order}
 import building.{BrickLayer, ConstructionCompany, ExteriorManager, Fitter, FrameManager, InteriorManager, Painter, SitePreparer}
 import org.scalatest.Assertion

@@ -1,4 +1,4 @@
-package building.framework.structures
+package framework.structures
 
 class NumInfo(memory: Int) extends RInfo[Double](memory) {
   def avg(): Double = Information.toArray.sum / Information.length

@@ -1,7 +1,7 @@
 package building.reports
 
-import building.framework.Report
-import building.framework.structures.NumInfo
+import framework.Report
+import framework.structures.NumInfo
 import building.structures.Weather._
 
 import scala.language.postfixOps

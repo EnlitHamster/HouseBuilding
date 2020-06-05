@@ -9,4 +9,4 @@ project/target/*
 target/*
 
 
-src/main/scala/building/framework/logic/
+src/main/scala/framework/logic/

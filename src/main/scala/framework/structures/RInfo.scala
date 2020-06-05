@@ -1,4 +1,4 @@
-package building.framework.structures
+package framework.structures
 
 import scala.language.postfixOps
 import scala.reflect.ClassTag

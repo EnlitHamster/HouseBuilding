@@ -1,6 +1,6 @@
-package building.framework.structures
+package framework.structures
 
-import building.framework.Predicts.{checkArg, checkNotNull}
+import framework.Predicts.{checkArg, checkNotNull}
 
 import scala.collection.mutable
 import scala.language.postfixOps

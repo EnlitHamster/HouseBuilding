@@ -1,4 +1,4 @@
-package building.framework.structures;
+package framework.structures;
 
 public enum Message {
     Report,

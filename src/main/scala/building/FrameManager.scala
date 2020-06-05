@@ -3,8 +3,8 @@ package building
 import akka.actor.SupervisorStrategy._
 import akka.actor.{ActorRef, OneForOneStrategy, Props}
 import building.structures.Operation._
-import building.framework.AccountTaker
-import building.framework.ReportPolicy.HandleResponse._
+import framework.AccountTaker
+import framework.ReportPolicy.HandleResponse._
 import building.policies.WorkerReportPolicy
 import building.reports.WorkerReport
 import building.structures.{Operation, Order}
@@ -38,7 +38,6 @@ class FrameManager extends AccountTaker {
     case Operation.dayPassed =>
       daysElapsed += 1
       if (daysElapsed == WeeklyReport) {
-        println(s"--" + self.path.name + "-- Request")
         request(brickLayer)
         daysElapsed = 0
       }
@@ -48,11 +47,10 @@ class FrameManager extends AccountTaker {
     case report: WorkerReport =>
       val Mult: Double = workerPolicy.handle().apply(report) match {
         case d: Double => d
-        case NoHandle => println(s"--" + self.path.name + "-- NoHandle"); 1.0
-        case StopHandle => unhandle(DayPassedID); println(s"--" + self.path.name + "-- StopHandle"); 1.0
+        case NoHandle => 1.0
+        case StopHandle => unhandle(DayPassedID); 1.0
       }
 
-      println(s"--" + self.path.name + "-- New multiplier: " + Mult)
       brickLayer ! Mult
   }
 

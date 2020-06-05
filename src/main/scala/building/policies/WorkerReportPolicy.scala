@@ -1,7 +1,7 @@
 package building.policies
 
-import building.framework.ReportPolicy
-import building.framework.ReportPolicy.HandleResponse._
+import framework.ReportPolicy
+import framework.ReportPolicy.HandleResponse._
 import building.reports.WorkerReport
 import building.structures.Weather._
 

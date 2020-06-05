@@ -1,4 +1,4 @@
-import building.framework.structures.{RInfo, RQueue}
+import framework.structures.{RInfo, RQueue}
 import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.language.postfixOps

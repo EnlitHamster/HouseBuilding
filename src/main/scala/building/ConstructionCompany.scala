@@ -4,6 +4,7 @@ import akka.actor.SupervisorStrategy._
 import akka.actor.{Actor, ActorRef, OneForOneStrategy, Props}
 import building.structures.Operation._
 import building.structures.{Delivery, Material, Order}
+import framework.AccountableActor
 
 import scala.language.postfixOps
 
@@ -35,7 +36,7 @@ class ConstructionCompany extends Actor {
     case d: Delivery =>
       if (d.Check) {
         context.become(receive)
-        context.actorOf(Props[FrameManager], s"FrameManager")
+        context.actorOf(AccountableActor.props[FrameManager], s"FrameManager")
       } else MaterialManager ! Order(d.Material)
     case BuildHouse => client = sender
   }

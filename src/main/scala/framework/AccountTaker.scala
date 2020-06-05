@@ -1,7 +1,7 @@
-package building.framework
+package framework
 
 import akka.actor.{ActorRef, Props}
-import building.framework.structures.Message
+import framework.structures.Message
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -20,7 +20,7 @@ trait AccountTaker extends AccountableActor {
   val Messages: mutable.Queue[Any] = mutable.Queue[Any]()
 
   def startSupervision[A <: AccountGiver : ClassTag](name: String): ActorRef = {
-    val Ref: ActorRef = context.actorOf(Props[A], name)
+    val Ref: ActorRef = context.actorOf(AccountableActor.props[A], name)
     supervised ::= Ref
     Ref
   }

@@ -1,4 +1,4 @@
-package building.framework
+package framework
 
 object ReportPolicy {
   object HandleResponse extends Enumeration {

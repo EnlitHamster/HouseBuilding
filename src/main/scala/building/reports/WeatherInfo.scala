@@ -1,6 +1,6 @@
 package building.reports
 
-import building.framework.structures.RInfo
+import framework.structures.RInfo
 import building.structures.Weather
 
 class WeatherInfo(memory: Int) extends RInfo[Weather](memory) {

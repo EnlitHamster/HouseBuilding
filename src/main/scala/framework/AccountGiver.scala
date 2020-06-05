@@ -1,7 +1,7 @@
-package building.framework
+package framework
 
 import akka.actor.ActorRef
-import building.framework.structures.Message
+import framework.structures.Message
 
 import scala.language.postfixOps
 

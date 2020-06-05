@@ -1,7 +1,7 @@
 package building
 
-import building.framework.structures.NumInfo
-import building.framework.{AccountGiver, Report}
+import framework.structures.NumInfo
+import framework.{AccountGiver, Report}
 import building.reports.{WeatherInfo, WorkerReport}
 import building.structures.Operation._
 import building.structures.Weather._

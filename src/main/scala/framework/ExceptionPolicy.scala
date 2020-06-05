@@ -1,4 +1,4 @@
-package building.framework
+package framework
 
 abstract class ExceptionPolicy {
   // Acts in response to an exception

@@ -1,4 +1,4 @@
-package building.framework
+package framework
 
 case object Predicts {
   def checkArg(expression: Boolean, template: String, args: Any*): Unit = if (!expression) throw new IllegalArgumentException(String.format(template, args))
