@@ -1,4 +1,4 @@
-package building.framework.logic
+package framework.logic
 
 import scala.collection.mutable.ArrayBuffer
 

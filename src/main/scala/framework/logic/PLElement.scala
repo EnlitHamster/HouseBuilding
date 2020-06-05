@@ -1,4 +1,4 @@
-package building.framework.logic
+package framework.logic
 
 // .gitignore
 trait PLElement {

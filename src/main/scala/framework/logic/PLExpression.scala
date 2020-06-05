@@ -1,4 +1,4 @@
-package building.framework.logic
+package framework.logic
 
 import scala.language.postfixOps
 import scala.collection.mutable
